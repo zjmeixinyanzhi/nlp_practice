@@ -44,10 +44,12 @@ def batch_greedy_decode(model, enc_data, vocab, params):
         """
         your code, 通过调用decoder得到预测的概率分布
         """
+        _, pred, dec_hidden = model.attention(dec_input, dec_hidden, enc_output, context_vector)
         context_vector, _ = model.attention(dec_hidden, enc_output)
         """
         your code, 通过调用tf.argmax完成greedy search，得到predicted_ids
         """
+        predicted_ids = tf.argmax(pred, axis=1).numpy()
         for index, predicted_id in enumerate(predicted_ids):
             predicts[index] += vocab.id_to_word(predicted_id) + ' '
         
@@ -207,6 +209,7 @@ def beam_decode(model, batch, vocab, params):
         # we decode the top likely 2 x beam_size tokens tokens at time step t for each hypothesis
         # model, batch, vocab, params
         dec_input = tf.expand_dims(latest_tokens, axis=1)  # shape=(3, 1)
+        print(dec_input.shape)
         # print('dec_input is ', dec_input)
         # print('step is ', steps)
         # print('dec_input is ', dec_input)
@@ -225,10 +228,10 @@ def beam_decode(model, batch, vocab, params):
                                  enc_outputs,  # shape=(3, 115, 256)
                                  dec_input,  # shape=(3, 1)
                                  dec_states,  # shape=(3, 256)
-                                 batch[0]['extended_enc_input'],  # shape=(3, 115)
-                                 batch[0]['max_oov_len'],  # shape=()
-                                 batch[0]['sample_encoder_pad_mask'],  # shape=(3, 115)
-                                 params['is_coverage'],  # true
+                                #  batch[0]['extended_enc_input'],  # shape=(3, 115)
+                                #  batch[0]['max_oov_len'],  # shape=()
+                                #  batch[0]['sample_encoder_pad_mask'],  # shape=(3, 115)
+                                #  params['is_coverage'],  # true
                                  prev_coverage=None)  # shape=(3, 115, 1)
         # print('returns["p_gen"] is ', returns["p_gen"])
         # print(np.squeeze(returns["p_gen"]))
