@@ -24,10 +24,17 @@ class BahdanauAttention(tf.keras.layers.Layer):
         # att_features = self.W1(enc_output) + self.W2(hidden_with_time_axis)
 
         # Calculate v^T tanh(W_h h_i + W_s s_t + b_attn)
-        score = self.V(tf.nn.tanh(self.W1(enc_output) + self.W2(hidden_with_time_axis)))  # shape=(16, 200, 1)
+        """
+        定义score
+        your code
+        """
+        score = self.V(tf.nn.tanh(self.W1(enc_output) + self.W2(hidden_with_time_axis)))
         # Calculate attention distribution
-        attn_dist = tf.nn.softmax(score, axis=1)  # shape=(16, 200, 1)
-
+        """
+        归一化score，得到attn_dist
+        your code
+        """
+        attn_dist = tf.nn.softmax(score, axis=1)
         # context_vector shape after sum == (batch_size, hidden_size)
         context_vector = attn_dist * enc_output  # shape=(16, 200, 256)
         context_vector = tf.reduce_sum(context_vector, axis=1)  # shape=(16, 256)
@@ -39,17 +46,30 @@ class Decoder(tf.keras.layers.Layer):
         super(Decoder, self).__init__()
         self.batch_sz = batch_sz
         self.dec_units = dec_units
-        self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim,
+        """
+        定义Embedding层，加载预训练的词向量
+        your code
+        """
+        self.embedding = tf.keras.layers.Embedding(vocab_size,
+                                                   embedding_dim,
                                                    weights=[embedding_matrix],
                                                    trainable=False)
-        # self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim)
-        self.gru = tf.keras.layers.GRU(self.dec_units,
+        """
+        定义单向的RNN、GRU、LSTM层
+        your code
+        """
+        self.gru = tf.keras.layers.GRU(dec_units,
                                        return_sequences=True,
                                        return_state=True,
                                        recurrent_initializer='glorot_uniform')
+        # self.bigru = tf.keras.layers.Bidirectional(self.gru, merge_mode='concat')
         # self.dropout = tf.keras.layers.Dropout(0.5)
-        self.fc = tf.keras.layers.Dense(vocab_size, activation=tf.keras.activations.softmax)
-        # self.fc = tf.keras.layers.Dense(vocab_size)
+        """
+        定义最后的fc层，用于预测词的概率
+        your code
+        """
+        self.fc = tf.keras.layers.Dense(vocab_size,
+                                        activation=tf.keras.activations.softmax)
 
     def call(self, x, hidden, enc_output, context_vector):
         # enc_output shape == (batch_size, max_length, hidden_size)
@@ -68,7 +88,5 @@ class Decoder(tf.keras.layers.Layer):
 
         # output = self.dropout(output)
         out = self.fc(output)
-        print('out is ', out)
 
         return x, out, state
-
