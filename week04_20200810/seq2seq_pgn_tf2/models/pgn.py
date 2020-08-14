@@ -40,7 +40,9 @@ class PGN(tf.keras.Model):
         通过调用attention得到decoder第一步所需的context_vector，coverage等值
         your code
         """
-
+        context_vector, attn_dist, coverage_next = self.attention(dec_hidden, enc_output, \
+            enc_padding_mask, use_coverage, prev_coverage)
+        
         for t in range(dec_inp.shape[1]):
             # Teachering Forcing
             dec_x, pred, dec_hidden = self.decoder(tf.expand_dims(dec_inp[:, t], 1),
@@ -62,6 +64,8 @@ class PGN(tf.keras.Model):
         调用calc_final_dist函数完成PGN最终预测概率输出
         your code
         """
+        final_dist = decoding.calc_final_dist(enc_extended_inp, predictions, attentions,
+            p_gens, batch_oov_len, self.params["vocab_size"], self.params["batch_size"])
         
         # outputs = dict(logits=tf.stack(final_dists, 1), dec_hidden=dec_hidden, attentions=attentions, coverages=coverages)
         if self.params['mode'] == "train":
