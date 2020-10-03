@@ -39,8 +39,8 @@ class BiDAF:
             decoder_dropout=0,
             # 新增
             embedding_matrix = np.zeros((10000, 50)),
-            vocab_size = 10000,
-            word_embedding_dim = 50
+            word_embedding_dim = 50,
+            max_char_features = 10000,
     ):
         """
         双向注意流模型
@@ -67,6 +67,7 @@ class BiDAF:
         # 新增
         self.embedding_matrix = embedding_matrix
         self.word_embedding_dim = word_embedding_dim
+        self.max_char_features = max_char_features
 
 
     def build_model(self):
@@ -81,14 +82,18 @@ class BiDAF:
 
         # embedding_layer = tf.keras.layers.Embedding(self.max_features, self.emb_size, embeddings_initializer='uniform')
         # glove word embedding
-        embedding_layer = tf.keras.layers.Embedding(self.max_features, self.word_embedding_dim,
-                                                   weights=[self.embedding_matrix], trainable=False)
-        
-        # print(embedding_layer.shape)
-        # print(cinn)
-        # print(qinn)
-        cemb = embedding_layer(cinn)
-        qemb = embedding_layer(qinn)
+        word_embedding_layer = tf.keras.layers.Embedding(self.max_features, 
+                                                        self.word_embedding_dim,
+                                                        weights=[self.embedding_matrix], 
+                                                        trainable=False)
+        # cnn char embedding
+        char_embedding_layer = tf.keras.layers.Conv1D(self.max_char_features,
+                                           5,
+                                           activation='tanh',
+                                           trainable=True)
+        # two layers concat
+        cemb = tf.keras.layers.Concatenate(axis=-1)([char_embedding_layer(cinn[None, :]), word_embedding_layer])
+        qemb = tf.keras.layers.Concatenate(axis=-1)([char_embedding_layer(qinn[None, :]), word_embedding_layer])
 
         for i in range(self.num_highway_layers):
             """
