@@ -11,6 +11,7 @@ tf.get_logger().setLevel(logging.ERROR)
 import layers
 import preprocess
 import numpy as np
+import data_io
 
 print("tf.__version__:", tf.__version__)
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -20,6 +21,7 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
         logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+        # 1 Physical GPUs, 1 Logical GPUs
         print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
     except RuntimeError as e:
         # Memory growth must be set before GPUs have been initialized
@@ -35,6 +37,10 @@ class BiDAF:
             encoder_dropout=0,
             num_decoders=2,
             decoder_dropout=0,
+            # 新增
+            embedding_matrix = np.zeros((10000, 50)),
+            vocab_size = 10000,
+            word_embedding_dim = 50
     ):
         """
         双向注意流模型
@@ -46,6 +52,9 @@ class BiDAF:
         :param encoder_dropout: encoder dropout 概率大小
         :param num_decoders:解码器个数
         :param decoder_dropout: decoder dropout 概率大
+        # 新增
+        :param word_embedding_dim: 词向量维度
+        :param embedding_matrix: 指定词向量矩阵
         """
         self.clen = clen
         self.qlen = qlen
@@ -55,6 +64,10 @@ class BiDAF:
         self.encoder_dropout = encoder_dropout
         self.num_decoders = num_decoders
         self.decoder_dropout = decoder_dropout
+        # 新增
+        self.embedding_matrix = embedding_matrix
+        self.word_embedding_dim = word_embedding_dim
+
 
     def build_model(self):
         """
@@ -66,10 +79,14 @@ class BiDAF:
         cinn = tf.keras.layers.Input(shape=(self.clen,), name='context_input')
         qinn = tf.keras.layers.Input(shape=(self.qlen,), name='question_input')
 
-        embedding_layer = tf.keras.layers.Embedding(self.max_features,
-                                                    self.emb_size,
-                                                    embeddings_initializer='uniform',
-                                                    )
+        # embedding_layer = tf.keras.layers.Embedding(self.max_features, self.emb_size, embeddings_initializer='uniform')
+        # glove word embedding
+        embedding_layer = tf.keras.layers.Embedding(self.max_features, self.word_embedding_dim,
+                                                   weights=[self.embedding_matrix], trainable=False)
+        
+        # print(embedding_layer.shape)
+        # print(cinn)
+        # print(qinn)
         cemb = embedding_layer(cinn)
         qemb = embedding_layer(qinn)
 
@@ -207,14 +224,25 @@ def accuracy(y_true, y_pred):
 
 
 if __name__ == '__main__':
+    global ds
     ds = preprocess.Preprocessor([
         './data/squad/train-v1.1.json',
         './data/squad/dev-v1.1.json',
         './data/squad/dev-v1.1.json'
     ])
+
+    # glove pre-triained word vectors
+    vec_path = './data/glove.6B.50d.txt'
+    # vec_path = './data/glove.6B.300d.txt'
+    embedding_matrix = data_io.load_word_to_embedding(vec_path, ds)
+
+    print(">>> %s" % len(embedding_matrix))
+
     train_c, train_q, train_y = ds.get_dataset('./data/squad/train-v1.1.json')
     test_c, test_q, test_y = ds.get_dataset('./data/squad/dev-v1.1.json')
 
+    # 输出：(87599, 100) (87599, 100) (87599, 2)
+    # (34726, 100) (34726, 100) (34726, 2)
     print(train_c.shape, train_q.shape, train_y.shape)
     print(test_c.shape, test_q.shape, test_y.shape)
 
@@ -222,12 +250,14 @@ if __name__ == '__main__':
         clen=ds.max_clen,
         qlen=ds.max_qlen,
         emb_size=50,
-        max_features=len(ds.charset)
+        max_features=len(ds.charset),
+        embedding_matrix = embedding_matrix,
+        word_embedding_dim = 50
     )
     bidaf.build_model()
-    bidaf.model.fit(
-        [train_c, train_q], train_y,
-        batch_size=64,
-        epochs=10,
-        validation_data=([test_c, test_q], test_y)
-    )
+    # bidaf.model.fit(
+    #     [train_c, train_q], train_y,
+    #     batch_size=64,
+    #     epochs=10,
+    #     validation_data=([test_c, test_q], test_y)
+    # )

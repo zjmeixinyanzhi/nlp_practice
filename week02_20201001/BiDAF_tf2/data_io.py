@@ -55,9 +55,28 @@ def dump(obj, fpath, **kwargs):
 def mkdir(dir_path):
     os.makedirs(dir_path, exist_ok=True)
 
+def load_word_to_embedding(vec_path, preprocessor):
+    """
+    load word embedding from word vector
+    :param vec_path: word vector file path
+    :param preprocessor: precessor.Precessor instance
+    :return embedding_matrix
+    """
+    word_to_embedding = {}
+    with open(vec_path, 'r', encoding='utf-8') as w2c_file:
+        for (i, line) in enumerate(w2c_file):
+            split = line.split(' ')
+
+            word = split[0]
+            word_vector = split[1:]
+            embedding = np.array([float(val) for val in word_vector])
+            word_to_embedding[preprocessor.get_id(word)] = embedding
+    
+    return word_to_embedding
+
 if __name__ == "__main__":
     d = {'Name': 'Testing', 'Arr': [1, 2, 3], '測試': '項目'}
-    dump(d, 'a.json', is_ascii=True)
+    # dump(d, 'a.json', is_ascii=True)
     # dump_json(d, './a.json')
     # dd = load_json('./a.json')
     # assert d == dd
