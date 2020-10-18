@@ -261,11 +261,13 @@ if __name__ == '__main__':
     ])
 
     # glove pre-triained word vectors
-    vec_path = './data/glove.6B.50d.txt'
-    # vec_path = './data/glove.6B.300d.txt'
-    embedding_matrix = data_io.load_word_to_embedding(vec_path, ds)
+    # vec_path = './data/glove.6B.50d.txt'
+    # # vec_path = './data/glove.6B.300d.txt'
+    # embedding_matrix = data_io.load_word_to_embedding(vec_path, ds)
+    # print(">>> %s" % len(embedding_matrix))
 
-    print(">>> %s" % len(embedding_matrix))
+    train_cc, train_qc, train_cw, train_qw, train_y = ds.get_dataset('./data/squad/train-v1.1.json')
+    test_cc, test_qc, test_cw, test_qw, test_y = ds.get_dataset('./data/squad/dev-v1.1.json')
 
     train_c, train_q, train_y = ds.get_dataset('./data/squad/train-v1.1.json')
     test_c, test_q, test_y = ds.get_dataset('./data/squad/dev-v1.1.json')
