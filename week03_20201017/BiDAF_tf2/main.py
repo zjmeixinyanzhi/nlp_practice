@@ -79,15 +79,15 @@ class BiDAF:
         """
         # 1 embedding 层
         # TODO：homework：使用glove word embedding（或自己训练的w2v） 和 CNN char embedding 
-        cinn = tf.keras.layers.Input(shape=(self.clen, self.max_char_features), name='context_input')
-        qinn = tf.keras.layers.Input(shape=(self.qlen, self.max_char_features), name='question_input')
+        cinn_c = tf.keras.layers.Input(shape=(self.clen, self.max_char_features), name='context_input')
+        qinn_c = tf.keras.layers.Input(shape=(self.qlen, self.max_char_features), name='question_input')
         
         # cnn char embedding
         char_embedding_layer = tf.keras.layers.Embedding(self.max_features,
             self.emb_size, embeddings_initializer='uniform')
         
-        emb_cc = char_embedding_layer(cinn)
-        emb_qc = char_embedding_layer(qinn)
+        emb_cc = char_embedding_layer(cinn_c)
+        emb_qc = char_embedding_layer(qinn_c)
 
         c_conv_out = []
         filter_sizes = sum(list(np.array(self.conv_layers).T[0]))
@@ -105,7 +105,6 @@ class BiDAF:
             q_conv_out.append(conv)
         q_conv_out = tf.keras.layers.concatenate(q_conv_out)
 
-        # glove word embedding
         cinn_w = tf.keras.layers.Input(shape=(self.clen,), name='context_input_word')
         qinn_w = tf.keras.layers.Input(shape=(self.qlen,), name='question_input_word')
         word_embedding_layer = tf.keras.layers.Embedding(
