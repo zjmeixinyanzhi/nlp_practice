@@ -41,6 +41,7 @@ class BiDAF:
             embedding_matrix = np.zeros((10000, 50)),
             word_embedding_dim = 50,
             max_char_features = 10000,
+            conv_layers = []
     ):
         """
         双向注意流模型
@@ -68,6 +69,7 @@ class BiDAF:
         self.embedding_matrix = embedding_matrix
         self.word_embedding_dim = word_embedding_dim
         self.max_char_features = max_char_features
+        self.conv_layers = conv_layers
 
 
     def build_model(self):
@@ -77,23 +79,45 @@ class BiDAF:
         """
         # 1 embedding 层
         # TODO：homework：使用glove word embedding（或自己训练的w2v） 和 CNN char embedding 
-        cinn = tf.keras.layers.Input(shape=(self.clen,), name='context_input')
-        qinn = tf.keras.layers.Input(shape=(self.qlen,), name='question_input')
-
-        # embedding_layer = tf.keras.layers.Embedding(self.max_features, self.emb_size, embeddings_initializer='uniform')
-        # glove word embedding
-        word_embedding_layer = tf.keras.layers.Embedding(self.max_features, 
-                                                        self.word_embedding_dim,
-                                                        weights=[self.embedding_matrix], 
-                                                        trainable=False)
+        cinn = tf.keras.layers.Input(shape=(self.clen, self.max_char_features), name='context_input')
+        qinn = tf.keras.layers.Input(shape=(self.qlen, self.max_char_features), name='question_input')
+        
         # cnn char embedding
-        char_embedding_layer = tf.keras.layers.Conv1D(self.max_char_features,
-                                           5,
-                                           activation='tanh',
-                                           trainable=True)
+        char_embedding_layer = tf.keras.layers.Embedding(self.max_features,
+            self.emb_size, embeddings_initializer='uniform')
+        
+        emb_cc = char_embedding_layer(cinn)
+        emb_qc = char_embedding_layer(qinn)
+
+        c_conv_out = []
+        filter_sizes = sum(list(np.array(self.conv_layers).T[0]))
+        assert filter_sizes==self.emb_size
+        for filters, kernel_size in self.conv_layers:
+            conv = tf.keras.layers.Conv2D(filters=filters,kernel_size=[kernel_size,self.emb_size],strides=1,activation='relu',padding='same')(emb_cc)
+            conv = tf.reduce_max(conv, 2)
+            c_conv_out.append(conv)
+        c_conv_out = tf.keras.layers.concatenate(c_conv_out)
+
+        q_conv_out = []
+        for filters, kernel_size in self.conv_layers:
+            conv = tf.keras.layers.Conv2D(filters=filters,kernel_size=[kernel_size,self.emb_size],strides=1,activation='relu',padding='same')(emb_qc)
+            conv = tf.reduce_max(conv, 2)
+            q_conv_out.append(conv)
+        q_conv_out = tf.keras.layers.concatenate(q_conv_out)
+
+        # glove word embedding
+        cinn_w = tf.keras.layers.Input(shape=(self.clen,), name='context_input_word')
+        qinn_w = tf.keras.layers.Input(shape=(self.qlen,), name='question_input_word')
+        word_embedding_layer = tf.keras.layers.Embedding(
+                                                        self.word_embedding_dim, self.emb_size,
+                                                        embeddings_initializer=tf.constant_initializer(self.embedding_matrix), 
+                                                        trainable=False)
+        emb_cw = word_embedding_layer(cinn_w)
+        emb_qw = word_embedding_layer(qinn_w)
+
         # two layers concat
-        cemb = tf.keras.layers.Concatenate(axis=-1)([char_embedding_layer(cinn[None, :]), word_embedding_layer])
-        qemb = tf.keras.layers.Concatenate(axis=-1)([char_embedding_layer(qinn[None, :]), word_embedding_layer])
+        cemb = tf.concat([emb_cw, c_conv_out], axis=2)
+        qemb = tf.concat([emb_qw, q_conv_out], axis=2)
 
         for i in range(self.num_highway_layers):
             """
