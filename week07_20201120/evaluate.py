@@ -1,7 +1,8 @@
 import sys
 import io
 import json
-sys.path.append('/content/drive/My Drive/kaikeba/project03/roberta/data')
+CUR_DIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.append('%s/data') % CUR_DIR
 from evaluate import evaluate as src_evaluate
 from collections import OrderedDict
 
