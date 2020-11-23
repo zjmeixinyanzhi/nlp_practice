@@ -12,6 +12,8 @@ from tqdm import tqdm
 from evaluate import Evaluator
 from keras.models import load_model
 
+CUR_DIR = os.path.abspath(os.path.dirname(__file__))
+
 # 基本信息
 maxlen = 128
 epochs = 20
@@ -19,10 +21,10 @@ batch_size = 4
 learing_rate = 2e-5
 
 
-data_dir='/content/drive/My Drive/kaikeba/project03/roberta/data'
-output_dir='/content/drive/My Drive/kaikeba/project03/roberta/output'
+data_dir = '%s/data' % CUR_DIR
+output_dir = '%s/output' % CUR_DIR
 
-bert_dir = '/content/drive/My Drive/kaikeba/project03/roberta/data'
+bert_dir = '%s/data' % CUR_DIR
 config_path = f'{bert_dir}/bert_config.json'
 checkpoint_path = f'{bert_dir}/bert_model.ckpt'
 dict_path = f'{bert_dir}/vocab.txt'
