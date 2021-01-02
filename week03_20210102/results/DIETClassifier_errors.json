@@ -1,0 +1,30 @@
+[
+  {
+    "text": "\u5e7f\u5dde\u4eca\u5929\u4e0b\u96e8\u4e86",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "address",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.8691614270210266,
+        "value": "\u5e7f\u5dde",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "\u4eca\u5929\u7684\u5929\u6c14\u5f88\u597d\uff0c\u4e0d\u662f\u5417",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "date_time",
+        "start": 0,
+        "end": 2,
+        "confidence_entity": 0.6125411987304688,
+        "value": "\u4eca\u5929",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  }
+]

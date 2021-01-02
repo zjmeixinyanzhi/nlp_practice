@@ -1,0 +1,10 @@
+[
+  {
+    "text": "\u4e0a\u6d77\u660e\u5929\u7684\u5929\u6c14",
+    "intent": "request_weather",
+    "intent_prediction": {
+      "name": "inform",
+      "confidence": 0.5777876973152161
+    }
+  }
+]

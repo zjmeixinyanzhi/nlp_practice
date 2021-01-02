@@ -1,0 +1,20 @@
+version: "2.0"
+stories:
+- story: sad path 2 (/var/folders/r9/q_nm2w7156bdy656wlps3vhh0000gn/T/tmpckvrvr5_/d66e218886a949c183e1e534e7437a5e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye  # predicted: utter_ask_continue
+- story: sad path 3 (/var/folders/r9/q_nm2w7156bdy656wlps3vhh0000gn/T/tmpckvrvr5_/d66e218886a949c183e1e534e7437a5e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye  # predicted: utter_ask_continue
