@@ -93,4 +93,4 @@ actions:
 - utter_did_that_help
 - utter_cheer_up
 forms:
-  weather_form: {}
+- weather_form: {}
