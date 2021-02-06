@@ -1,8 +1,8 @@
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: en
+language: zh
 pipeline:
-  - name: WhitespaceTokenizer
+  - name: JiebaTokenizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
@@ -15,6 +15,13 @@ pipeline:
   - name: EntitySynonymMapper
   - name: ResponseSelector
     epochs: 100
+
+policies:
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+    max_history: 10
+    epochs: 100
+  - name: RulePolicy
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
@@ -39,12 +46,12 @@ pipeline:
 #  - name: MappingPolicy
 
 
-policies:
-  - name: MemoizationPolicy
-  - name: TEDPolicy
-    max_history: 10
-    epochs: 100
-  - name: MappingPolicy
+#policies:
+#  - name: MemoizationPolicy
+#  - name: TEDPolicy
+#    max_history: 10
+#    epochs: 100
+#  - name: MappingPolicy
 
 
 #policies:

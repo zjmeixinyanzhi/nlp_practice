@@ -5,27 +5,27 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: start_count
-  - action: utter_10_countdown
+  - action: utter_10_count
   - intent: confirm
-  - action: utter_9_countdown
+  - action: utter_9_count
   - intent: confirm
-  - action: utter_8_countdown
+  - action: utter_8_count
   - intent: confirm
-  - action: utter_7_countdown
+  - action: utter_7_count
   - intent: confirm
-  - action: utter_6_countdown
+  - action: utter_6_count
   - intent: confirm
-  - action: utter_5_countdown
+  - action: utter_5_count
   - intent: confirm
-  - action: utter_4_countdown
+  - action: utter_4_count
   - intent: confirm
-  - action: utter_3_countdown
+  - action: utter_3_count
   - intent: confirm
-  - action: utter_2_countdown
+  - action: utter_2_count
   - intent: confirm
-  - action: utter_1_countdown
+  - action: utter_1_count
   - intent: confirm
-  - action: utter_0_countdown
+  - action: utter_0_count
   - intent: goodbye
   - action: utter_goodbye
 - story: say goodbye
@@ -43,28 +43,28 @@ stories:
   - intent: bot_challenge
   - action: utter_iamabot
   - intent: start_count
-  - action: utter_10_countdown
+  - action: utter_10_count
   - intent: confirm
-  - action: utter_9_countdown
+  - action: utter_9_count
   - intent: confirm
-  - action: utter_8_countdown
+  - action: utter_8_count
   - intent: confirm
-  - action: utter_7_countdown
+  - action: utter_7_count
   - intent: confirm
-  - action: utter_6_countdown
+  - action: utter_6_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_5_countdown
+  - action: utter_5_count
   - intent: confirm
-  - action: utter_4_countdown
+  - action: utter_4_count
   - intent: confirm
-  - action: utter_3_countdown
+  - action: utter_3_count
   - intent: confirm
-  - action: utter_2_countdown
+  - action: utter_2_count
   - intent: confirm
-  - action: utter_1_countdown
+  - action: utter_1_count
   - intent: confirm
-  - action: utter_0_countdown
+  - action: utter_0_count
   - intent: bot_challenge
   - action: utter_iamabot
   - intent: goodbye
@@ -74,29 +74,29 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: start_count
-  - action: utter_10_countdown
+  - action: utter_10_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_9_countdown
+  - action: utter_9_count
   - intent: confirm
-  - action: utter_8_countdown
+  - action: utter_8_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_7_countdown
+  - action: utter_7_count
   - intent: confirm
-  - action: utter_6_countdown
+  - action: utter_6_count
   - intent: confirm
-  - action: utter_5_countdown
+  - action: utter_5_count
   - intent: confirm
-  - action: utter_4_countdown
+  - action: utter_4_count
   - intent: confirm
-  - action: utter_3_countdown
+  - action: utter_3_count
   - intent: confirm
-  - action: utter_2_countdown
+  - action: utter_2_count
   - intent: confirm
-  - action: utter_1_countdown
+  - action: utter_1_count
   - intent: confirm
-  - action: utter_0_countdown
+  - action: utter_0_count
   - intent: goodbye
   - action: utter_goodbye
 - story: interrupt path 3
@@ -104,28 +104,28 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: start_count
-  - action: utter_10_countdown
+  - action: utter_10_count
   - intent: confirm
-  - action: utter_9_countdown
+  - action: utter_9_count
   - intent: confirm
-  - action: utter_8_countdown
+  - action: utter_8_count
   - intent: confirm
-  - action: utter_7_countdown
+  - action: utter_7_count
   - intent: confirm
-  - action: utter_6_countdown
+  - action: utter_6_count
   - intent: confirm
-  - action: utter_5_countdown
+  - action: utter_5_count
   - intent: confirm
-  - action: utter_4_countdown
+  - action: utter_4_count
   - intent: confirm
-  - action: utter_3_countdown
+  - action: utter_3_count
   - intent: confirm
-  - action: utter_2_countdown
+  - action: utter_2_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_1_countdown
+  - action: utter_1_count
   - intent: confirm
-  - action: utter_0_countdown
+  - action: utter_0_count
   - intent: goodbye
   - action: utter_goodbye
 - story: interrupt path 4
@@ -133,25 +133,52 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: start_count
-  - action: utter_10_countdown
+  - action: utter_10_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_9_countdown
+  - action: utter_9_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_8_countdown
+  - action: utter_8_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_7_countdown
+  - action: utter_7_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_6_countdown
+  - action: utter_6_count
   - intent: confirm
-  - action: utter_5_countdown
+  - action: utter_5_count
   - intent: confirm
-  - action: utter_4_countdown
+  - action: utter_4_count
   - intent: bot_challenge
   - action: utter_iamabot
-  - action: utter_3_countdown
+  - action: utter_3_count
   - intent: goodbye
   - action: utter_goodbye
+- story: interrupt path 5
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: start_count
+  - action: utter_10_count
+  - intent: bot_challenge
+  - action: utter_iamabot
+  - action: utter_9_count
+  - intent: asking
+  - action: utter_wrong_business
+  - action: utter_8_count
+  - intent: asking
+  - action: utter_wrong_business
+  - action: utter_7_count
+  - intent: asking
+  - action: utter_wrong_business
+  - action: utter_6_count
+  - intent: stop
+  - action: utter_5_count
+  - intent: stop
+  - action: utter_4_count
+  - intent: deny
+  - action: utter_chitchat
+  - action: utter_3_count
+  - intent: thanks
+  - action: utter_answer_thanks

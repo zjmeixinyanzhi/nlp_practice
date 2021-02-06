@@ -2,35 +2,137 @@ version: "2.0"
 nlu:
 - intent: greet
   examples: |
-    - hey
+    - 你好
+    - 你好啊
+    - 早上好
+    - 晚上好
     - hello
     - hi
-    - good morning
-    - good evening
-    - hey there
+    - 嗨
+    - 嗨喽
+    - 见到你很高兴
+    - 嘿
+    - 早
+    - 上午好
+    - hello哈喽
+    - 哈喽哈喽
+    - hello hello
+    - 早啦
 - intent: start_count
   examples: |
-    - you can start counting
-    - please start counting
-    - count
-    - start counting
-    - you may count
+    - 进行倒数
+    - 开始倒数
+    - 开始计数
+    - 开始数数
+    - 请倒数吧
+    - 数数
+    - 倒数
+    - 计数
+    - 计数开始
+    - 你可以倒数了
 - intent: confirm
   examples: |
-    - indeed
-    - yes
+    - 知道了
+    - 是的
+    - 当然
+    - 好的
     - ok
-    - quite
+    - 嗯
+    - 可以
+    - 你可以这么做
+    - 你做得可以啊
+    - 同意
+    - 听起来不错
+    - 是这样的
+    - 的确是这样子的
+    - 我同意你的观点
+    - 对的
+    - 好滴
+    - 行
+    - 还行
+    - 当然可以
 - intent: goodbye
   examples: |
-    - bye
     - goodbye
-    - see you around
-    - see you later
+    - bye
+    - bye bye
+    - 88
+    - 886
+    - 再见
+    - 拜
+    - 拜拜
+    - 拜拜，下次再聊
+    - 下次见
+    - 回头见
+    - 下次再见
+    - 下次再聊
+    - 有空再聊
+    - 先这样吧
+    - 好了，就说这么多了
+    - 好了，先这样
+    - 没事
+    - 回见
 - intent: bot_challenge
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
-    - are you a bot
+    - 你是机器人嘛？
+    - 你是真人嘛？
+    - 你是人嘛？
+    - 你是女孩子嘛？
+    - 你是男孩子嘛？
+    - 我在和机器人说话么？
+    - 我在和人说话么？
+    - 你是人吗？
+    - 你是真人吗？
+- intent: stop
+  examples: |
+    - 停止查询
+    - 停止
+    - 停顿
+    - 真差劲，什么都不懂
+    - 真蠢
+    - 什么都查不到
+    - 你什么都不会
+    - 感觉你什么都不知道
+    - 我不查了，太傻了
+    - 就这样吧
+    - 感觉你什么都不会
+    - 没有了
+    - 什么都没查到
+    - 我猜你是不是坏了
+- intent: deny
+  examples: |
+    - 不了
+    - 算了
+    - 不用了
+    - 不需要
+    - 就这样吧
+    - 不
+    - no
+    - 不可以
+    - 不是的
+    - 不认同
+    - 否定
+    - 不是这样子的
+    - 我不同意你的观点
+    - 不同意
+    - 不好
+    - 拒绝
+    - 不行
+- intent: thanks
+  examples: |
+    - 谢谢
+    - thanks
+    - thank you
+    - 真的太感谢你了，帮了我大忙
+    - 谢谢你帮了我大忙
+    - 你帮了我大忙，谢谢你小智
+    - 非常感谢
+    - 谢了
+- intent: asking
+  examples: |
+    - 你支持天气查询
+    - 景点查询
+    - 查询
+    - 小吃查询
+    - 美食查询
+    - 其他功能

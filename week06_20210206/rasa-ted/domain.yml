@@ -1,18 +1,22 @@
 actions:
-  - utter_0_countdown
-  - utter_10_countdown
-  - utter_1_countdown
-  - utter_2_countdown
-  - utter_3_countdown
-  - utter_4_countdown
-  - utter_5_countdown
-  - utter_6_countdown
-  - utter_7_countdown
-  - utter_8_countdown
-  - utter_9_countdown
+  - utter_0_count
+  - utter_1_count
+  - utter_2_count
+  - utter_3_count
+  - utter_4_count
+  - utter_5_count
+  - utter_6_count
+  - utter_7_count
+  - utter_8_count
+  - utter_9_count
+  - utter_10_count
   - utter_goodbye
   - utter_greet
   - utter_iamabot
+  - utter_wrong_business
+  - utter_chitchat
+  - utter_noworries
+  - utter_answer_thanks
 
 intents:  
   - start_count
@@ -20,36 +24,62 @@ intents:
   - confirm
   - goodbye
   - bot_challenge
+  - stop
 
 responses:
-  utter_0_countdown:
-  - text: "End of countdown!"
-  utter_1_countdown:
-  - text: "Countdown! ETA 1 🎵"
-  utter_2_countdown:
-  - text: "Countdown! ETA 2 🎵"
-  utter_3_countdown:
-  - text: "Countdown! ETA 3 🎵"
-  utter_4_countdown:
-  - text: "Countdown! ETA 4 🎵"
-  utter_5_countdown:
-  - text: "Countdown! ETA 5 🎵"
-  utter_6_countdown:
-  - text: "Countdown! ETA 6 🎵"
-  utter_7_countdown:
-  - text: "Countdown! ETA 7 🎵"
-  utter_8_countdown:
-  - text: "Countdown! ETA 8 🎵"
-  utter_9_countdown:
-  - text: "Countdown! ETA 9 🎵"
-  utter_10_countdown:
-    - text: "Countdown! ETA 10 🎵"
+  utter_0_count:
+  - text: "倒数结束！！"
+  utter_1_count:
+  - text: "倒数 1~~"
+  utter_2_count:
+  - text: "倒数 2~~"
+  utter_3_count:
+  - text: "倒数 3~~"
+  utter_4_count:
+  - text: "倒数 4~~"
+  utter_5_count:
+  - text: "倒数 5~~"
+  utter_6_count:
+  - text: "倒数 6~~"
+  utter_7_count:
+  - text: "倒数 7~~"
+  utter_8_count:
+  - text: "倒数 8~~"
+  utter_9_count:
+  - text: "倒数 9~~"
+  utter_10_count:
+  - text: "倒数 10~~"
   utter_goodbye:
-  - text: Bye
+  - text: "再见啦~"
+  - text: "再见"
+  - text: "拜拜"
+  - text: "虽然我有万般舍不得，但是天下没有不散的宴席~祝您安好！"
+  - text: "期待下次再见！"
+  - text: "嗯嗯，下次需要时随时记得我哟~"
+  - text: "see you!"
   utter_greet:
-  - text: Hey!
+  - text: "嘿，我的朋友！有什么需要帮忙的？"
+  - text: "您好！请问我可以帮到您吗？"
+  - text: "您好！很高兴为您服务。请说出您要的服务？"
   utter_iamabot:
-  - text: I am a bot, not a human, powered by Rasa.
+  - text: "我是你的虚拟助理贾维斯~"
+  utter_wrong_business:
+    - text: "当前还不支持这个功能，请重新输入。"
+    - text: "哎呀，你说的话，我有点不懂哦"
+  utter_chitchat:
+    - text: "呃呃呃呃呃"
+    - text: "咱们这算在尬聊吗？"
+    - text: "我接不上你的话了，尴尬"
+  utter_noworries:
+    - text: "不用客气 :)"
+    - text: "没事啦"
+    - text: "不客气哈，都是老朋友了 :)"
+  utter_answer_thanks:
+    - text: "嗯呢。不用客气~"
+    - text: "这是我应该做的，主人~"
+    - text: "嗯嗯，合作愉快！"
+    - text: "能帮助您，是我的荣幸~"
+  utter_
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 60
